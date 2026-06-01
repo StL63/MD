@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>그리노슈 제국 — 등장인물 소개</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e30;
+    --navy: #0b0f1e; --navy-mid: #111627; --navy-card: #141928; --navy-border: #1e2640;
+    --cream: #f2ead8; --cream-dim: #cec5ad; --muted: #6e7a9a;
+  }
+  html { scroll-behavior: smooth; }
+  body { background-color: var(--navy); color: var(--cream); font-family: 'Noto Sans KR', sans-serif; font-weight: 300; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 60% 50% at 20% 20%, rgba(201,168,76,0.04) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 80% 80%, rgba(74,56,112,0.08) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+
+  .deco-line { display: flex; align-items: center; gap: 12px; margin: 0 auto; }
+  .deco-line::before, .deco-line::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim), transparent); }
+  .deco-diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.25rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(11,15,30,0.95), transparent); transition: background 0.3s; }
+  nav.scrolled { background: rgba(11,15,30,0.98); border-bottom: 1px solid var(--navy-border); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.15em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--cream-dim); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HEADER */
+  header { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; border-bottom: 1px solid var(--navy-border); }
+  .header-ornament { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 8vw, 7rem); font-weight: 300; line-height: 1.1; letter-spacing: 0.05em; color: var(--cream); opacity: 0; animation: fadeUp 1s ease 0.6s forwards; margin-bottom: 1rem; }
+  .header-title em { font-style: italic; color: var(--gold-light); }
+  .header-sub { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; color: var(--cream-dim); letter-spacing: 0.15em; margin-top: 1.5rem; opacity: 0; animation: fadeUp 1s ease 0.9s forwards; }
+  .header-deco { margin: 2.5rem auto; width: 200px; opacity: 0; animation: fadeUp 1s ease 1.1s forwards; }
+  .header-tagline { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; color: var(--cream-dim); letter-spacing: 0.08em; font-style: italic; max-width: 420px; line-height: 1.9; opacity: 0; animation: fadeUp 1s ease 1.2s forwards; }
+  .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; animation: fadeUp 1s ease 1.5s forwards; }
+  .scroll-hint span { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--muted); }
+  .scroll-arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold-dim), transparent); animation: scrollBounce 2s ease infinite; }
+
+  /* SECTION COMMON */
+  .sec { position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; text-align: center; margin-bottom: 1rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; text-align: center; color: var(--cream); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+  .section-divider { width: 280px; margin: 1.5rem auto 4rem; }
+
+  /* CHARACTER CARDS */
+  /* ===================================================
+   📱 [기본 세팅: 모바일] - 위아래로 길쭉한 카드 형태
+   =================================================== */
+.characters-grid { 
+  display: grid; 
+  grid-template-columns: 1fr; 
+  gap: 1.5rem; 
+  padding: 0 20px;
+}
+
+/* ===================================================
+   💻 [화면이 커지면: PC] - 이미지는 240px 고정, 카드 폭을 양옆으로 확장
+   =================================================== */
+@media (min-width: 801px) {
+  .characters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    
+    /* 💡 오타 수정 및 강제 넓히기 마법 코드! */
+    width: 95vw;                 /* 모니터 화면 가로의 95%를 다 씁니다 */
+    max-width: 1600px;           /* (1450x 오타 수정) 최대 1600px까지 허용 */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%); /* 강제로 화면 정중앙에 배치 */
+    
+    margin: 0 auto;
+    gap: 2rem;
+    padding: 0 20px;
+  }
+
+  /* 카드 내부 레이아웃 */
+  .char-card {
+    display: grid;
+    grid-template-columns: 240px 1fr; 
+    column-gap: 2rem;
+    align-items: stretch; 
+    padding: 2rem;
+  }
+
+  /* 이미지 세로 100% 채우기 */
+  .char-image-wrap {
+    grid-column: 1;
+    grid-row: 1 / span 20; 
+    margin-bottom: 0;      
+    height: 100%; 
+  }
+
+  /* 사진 비율 유지하며 꽉 채우기 */
+  .char-image-wrap img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; 
+    border-radius: 2px;
+  }
+
+  /* 이미지를 제외한 모든 글은 오른쪽 배치 */
+  .char-card > :not(.char-image-wrap) {
+    grid-column: 2;
+  }
+}
+  .char-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 2px; padding: 1.75rem; position: relative; overflow: hidden; cursor: default; transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.3s, box-shadow 0.4s; opacity: 0; transform: translateY(24px); }
+  .char-card.visible { opacity: 1; transform: translateY(0); transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s, box-shadow 0.4s; }
+  .char-card:hover { transform: translateY(-6px); }
+  .char-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--card-accent, var(--gold-dim)); opacity: 0.5; transition: opacity 0.3s; }
+  .char-card:hover::before { opacity: 1; }
+  /* [테마별 카드 상단 선 색상] */
+  .char-card[data-theme="red"] { --card-accent: #a63a3a; }       /* 알릭스: 레드 */
+  .char-card[data-theme="gold"] { --card-accent: var(--gold-dim); } /* 자비에: 골드 */
+  .char-card[data-theme="blue"] { --card-accent: #A2C7D5; }       /* 이녹: 요청하신 청회색 */
+  .char-card[data-theme="brown"] { --card-accent: #b0916d; }      /* 아이릴: 연갈색 */
+  /* [테마별 마우스 올렸을 때 테두리 획 & 후광 효과] */
+  .char-card[data-theme="red"]:hover { border-color: #a63a3a; box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(166,58,58,0.15); }
+  .char-card[data-theme="gold"]:hover { border-color: var(--gold-dim); box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.1); }
+  .char-card[data-theme="blue"]:hover { border-color: #A2C7D5; box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(162,199,213,0.2); }
+  .char-card[data-theme="brown"]:hover { border-color: #b0916d; box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(176,145,109,0.15); }
+
+  /* 이미지 플레이스홀더 */
+  .char-image-wrap { width: 100%; aspect-ratio: 3/4; background: var(--navy-mid); border: 1px solid var(--navy-border); border-radius: 1px; margin-bottom: 1.25rem; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; }
+  .char-image-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .char-image-placeholder-text { font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--muted); text-align: center; }
+
+  .char-icon { font-size: 1.8rem; margin-bottom: 0.75rem; display: block; }
+  .char-role { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.4em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.4rem; }
+  .char-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; letter-spacing: 0.04em; color: var(--cream); margin-bottom: 0.2rem; line-height: 1.2; }
+  .char-subtitle { font-family: 'Noto Serif KR', serif; font-size: 0.8rem; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 1.1rem; }
+  .char-divider { width: 100%; height: 1px; background: linear-gradient(to right, var(--card-accent, var(--gold-dim)), transparent); margin-bottom: 1.1rem; opacity: 0.4; }
+  .char-desc { font-family: 'Noto Serif KR', serif; font-size: 0.88rem; line-height: 1.85; color: var(--cream); margin-bottom: 1.25rem; }
+  .char-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.25rem; }
+  .char-stat { display: flex; flex-direction: column; gap: 3px; }
+  .stat-label { font-size: 0.7rem; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; }
+  .stat-value { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 0.98rem; color: var(--cream); }
+  .char-quote { border-left: 2px solid var(--card-accent, var(--gold-dim)); padding-left: 1rem; }
+  .char-quote p { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; color: var(--cream); line-height: 1.75; margin-bottom: 0.35rem; }
+  .char-quote p:last-child { margin-bottom: 0; }
+  .char-tag { display: inline-block; font-size: 0.85rem; letter-spacing: 0.15em; padding: 3px 10px; border: 1px solid var(--card-accent, var(--gold-dim)); color: var(--cream-dim); margin-top: 1.1rem; opacity: 0.55; border-radius: 1px; justify-self: start;}
+
+  /* RELATIONSHIP NETWORK */
+  .relations-wrap { position: relative; z-index: 1; padding: 6rem 2rem; border-top: 1px solid var(--navy-border); }
+  .relations-inner { max-width: 800px; margin: 0 auto; }
+  .network-container { position: relative; width: 100%; max-width: 680px; margin: 0 auto; user-select: none; }
+  .network-svg { width: 100%; display: block; overflow: visible; }
+  .char-node-group { cursor: default; }
+  .char-node-circle { fill: var(--navy-card); stroke: var(--navy-border); stroke-width: 1.5; transition: stroke 0.3s; }
+  .char-node-label { font-family: 'Noto Serif KR', serif; fill: var(--cream); font-size: 12px; }
+  .char-node-role { font-family: 'Cormorant Garamond', serif; fill: var(--muted); font-size: 10px; letter-spacing: 1px; }
+  .rel-line { stroke: var(--gold-dim); stroke-width: 1; stroke-dasharray: 5 4; opacity: 0.5; }
+  .rel-diamond-group { cursor: pointer; }
+  .rel-diamond-shape { fill: var(--navy-card); stroke: var(--gold-dim); stroke-width: 1.5; transition: fill 0.2s, stroke 0.2s; }
+  .rel-diamond-group:hover .rel-diamond-shape, .rel-diamond-group.active .rel-diamond-shape { fill: var(--gold-dim); stroke: var(--gold); }
+  .rel-tooltip { position: absolute; background: var(--navy-card); border: 1px solid var(--gold-dim); padding: 1rem 1.25rem; min-width: 220px; max-width: 280px; pointer-events: none; opacity: 0; transform: translateY(4px); transition: opacity 0.2s, transform 0.2s; z-index: 10; border-radius: 1px; }
+  .rel-tooltip.show { opacity: 1; transform: translateY(0); }
+  .rel-tooltip-pair { font-size: 1.2rem; margin-bottom: 0.4rem; }
+  .rel-tooltip-names { font-family: 'Noto Serif KR', serif; font-size: 0.9rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; }
+  .rel-tooltip-desc { font-family: 'Noto Serif KR', serif; font-size: 0.82rem; color: var(--cream); line-height: 1.75; white-space: pre-line; word-break: keep-all;}
+  .rel-hint { text-align: center; margin-top: -3rem; margin-bottom: 2.5rem; font-family: 'Noto Serif KR', serif; font-size: 0.95rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+
+  /* WORLD MAP SECTION */
+  .world-outer { position: relative; z-index: 1; background: var(--navy-mid); border-top: 1px solid var(--navy-border); border-bottom: 1px solid var(--navy-border); padding: 6rem 2rem; }
+  .world-inner-wrap { max-width: 900px; margin: 0 auto; }
+  .map-container { position: relative; display: inline-block; width: 100%; margin-bottom: 1.5rem; }
+  .map-img { width: 100%; display: block; border: 1px solid var(--navy-border); border-radius: 2px; opacity: 0.92; }
+  .map-hotspot { position: absolute; 
+  transform: translate(-50%, -50%); 
+  cursor: pointer; 
+  z-index: 5; 
+  background: transparent; /* 완전 투명하게 */
+  border-radius: 50%; /* 둥근 형태의 클릭 영역 */
+  transition: background 0.3s, box-shadow 0.3s;}
+  /* 2. 지도 아이콘에 마우스를 올리거나 클릭(활성화)했을 때의 효과 */
+/* 투명하지만, 상호작용 시 은은하게 후광이 비치도록 설정 (사용자 경험 상승) */
+.map-hotspot:hover, .map-hotspot.active { 
+  background: rgba(201, 168, 76, 0.15); /* 반투명한 금색 빛 */
+  box-shadow: 0 0 25px rgba(201, 168, 76, 0.4); /* 테두리에 금색 후광 */
+}
+  .map-info-panel { background: var(--navy-card); border: 1px solid var(--gold-dim); padding: 1.5rem 1.75rem; margin-top: 0.5rem; opacity: 0; max-height: 0; overflow: hidden; transition: opacity 0.3s, max-height 0.4s; border-radius: 1px; }
+  .map-info-panel.open { opacity: 1; max-height: 300px; }
+  .map-info-icon { font-size: 1.5rem; margin-bottom: 0.5rem; display: block; }
+  .map-info-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--cream); margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+  .map-info-text { font-family: 'Noto Serif KR', serif; font-size: 0.85rem; color: var(--cream); line-height: 1.85; white-space: pre-wrap;}
+  .society-card { background: var(--navy-card); border: 1px solid var(--navy-border); padding: 1.5rem 1.75rem; border-radius: 2px; margin-top: 2rem; border-left: 3px solid var(--gold-dim); }
+  .society-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--cream); margin-bottom: 0.6rem; letter-spacing: 0.05em; }
+  .society-text { font-family: 'Noto Serif KR', serif; font-size: 0.85rem; color: var(--cream); line-height: 1.85; }
+  .magical-card { background: var(--navy-card); border: 1px solid var(--navy-border); padding: 1.5rem 1.75rem; border-radius: 2px; margin-top: 2rem; margin-bottom: 3rem; border-left: 3px solid var(--gold-dim); }
+  .magical-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--cream); margin-bottom: 0.6rem; letter-spacing: 0.05em; }
+  .magical-text { font-family: 'Noto Serif KR', serif; font-size: 0.85rem; color: var(--cream); line-height: 1.85; }
+
+
+
+  /* NEIGHBOR MAP SECTION */
+  .neighbor-outer { position: relative; z-index: 1; background: var(--navy-mid); border-top: 1px solid var(--navy-border); padding: 6rem 2rem; }
+  .neighbor-inner-wrap { max-width: 900px; margin: 0 auto; }
+
+  /* FOOTER */
+  footer { position: relative; z-index: 1; text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--navy-border); }
+  .footer-text { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; letter-spacing: 0.35em; color: var(--muted); text-transform: uppercase; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes scrollBounce { 0%, 100% { transform: scaleY(1); opacity: 0.6; } 50% { transform: scaleY(1.3); opacity: 1; } }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .characters-grid { grid-template-columns: 1fr; }
+    .factions-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-logo">GRINOSCHU</div>
+  <ul class="nav-links">
+    <li><a href="#characters">등장인물</a></li>
+    <li><a href="#relations">관계도</a></li>
+    <li><a href="#world">세계관</a></li>
+
+  </ul>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <p class="header-ornament">Grinouche Empire</p>
+  <h1 class="header-title">그리노슈 제국</h1>
+  <p class="header-sub">등장인물 소개 · 세계관 안내</p>
+  <div class="header-deco">
+    <div class="deco-line"><div class="deco-diamond"></div><div class="deco-diamond" style="width:4px;height:4px;opacity:0.5;"></div><div class="deco-diamond"></div></div>
+  </div>
+  <p class="header-tagline">혈통과 체면, 예법과 평판이 지배하는 제국에서<br>당신의 이야기가 시작된다.</p>
+  <div class="scroll-hint"><span>SCROLL</span><div class="scroll-arrow"></div></div>
+</header>
+
+<!-- CHARACTERS -->
+<section class="sec" id="characters">
+  <p class="section-label">Characters</p>
+  <h2 class="section-title">등장인물</h2>
+  <div class="section-divider"><div class="deco-line"><div class="deco-diamond"></div></div></div>
+  <div class="characters-grid">
+
+    <!-- 알릭스 -->
+    <div class="char-card" data-theme="red" data-delay="0">
+      <div class="char-image-wrap">
+        <img src="https://raw.githubusercontent.com/StL63/A/main/MD/A1.png" alt="알릭스">
+      </div>
+      <span class="char-icon">👑</span>
+      <p class="char-role">Alix de Escart</p>
+      <h3 class="char-name">알릭스 드 에스카르트</h3>
+      <p class="char-subtitle">황태자</p>
+      <div class="char-divider"></div>
+      <p class="char-desc">침착하고 완벽한 황태자. <br> 감정보다 책임을 우선하며, 좀처럼 속내를 드러내지 않는다.</p>
+      <div class="char-stats">
+        <div class="char-stat"><span class="stat-label">나이</span><span class="stat-value">27세</span></div>
+        <div class="char-stat"><span class="stat-label">키</span><span class="stat-value">182cm</span></div>
+        <div class="char-stat"><span class="stat-label">MBTI</span><span class="stat-value">INTJ (1w9)</span></div>
+        <div class="char-stat"><span class="stat-label">혈액형</span><span class="stat-value">A형</span></div>
+      </div>
+      <div class="char-quote">
+        <p>"그대가 불편했다면 사과하지."</p>
+      </div>
+      <span class="char-tag">자기통제·원칙주의</span>
+    </div>
+
+    <!-- 자비에 -->
+    <div class="char-card" data-theme="gold" data-delay="1">
+      <div class="char-image-wrap">
+        <img src="https://raw.githubusercontent.com/StL63/A/main/MD/Z1.png" alt="자비에">
+      </div>
+      <span class="char-icon">🗡️</span>
+      <p class="char-role">Xavier Evelon</p>
+      <h3 class="char-name">자비에 이블론</h3>
+      <p class="char-subtitle">공작가 후계자</p>
+      <div class="char-divider"></div>
+      <p class="char-desc">거침없고 충동적이며 도발을 즐김. <br>사람의 감정을 흔들고 본심을 끌어내는 데 능하다.</p>
+      <div class="char-stats">
+        <div class="char-stat"><span class="stat-label">나이</span><span class="stat-value">26세</span></div>
+        <div class="char-stat"><span class="stat-label">키</span><span class="stat-value">185cm</span></div>
+        <div class="char-stat"><span class="stat-label">MBTI</span><span class="stat-value">ESTP (8w7)</span></div>
+        <div class="char-stat"><span class="stat-label">혈액형</span><span class="stat-value">B형</span></div>
+      </div>
+      <div class="char-quote">
+        <p>"재미없게 굴지 마."</p>
+      </div>
+      <span class="char-tag">독설가·쾌락주의자</span>
+    </div>
+
+    <!-- 이녹 -->
+    <div class="char-card" data-theme="blue" data-delay="2">
+      <div class="char-image-wrap">
+        <img src="https://raw.githubusercontent.com/StL63/A/main/MD/E1.png" alt="이녹">
+      </div>
+      <span class="char-icon">🔮</span>
+      <p class="char-role">Inok Belper</p>
+      <h3 class="char-name">이녹 벨페르</h3>
+      <p class="char-subtitle">바르토나스 마탑주</p>
+      <div class="char-divider"></div>
+      <p class="char-desc">사람과 감정을 연구하듯 바라봄. <br>누구의 편도 아니며, 흥미로운 현상을 선호한다.</p>
+      <div class="char-stats">
+        <div class="char-stat"><span class="stat-label">나이</span><span class="stat-value">나이 불명</span></div>
+        <div class="char-stat"><span class="stat-label">키</span><span class="stat-value">188cm</span></div>
+        <div class="char-stat"><span class="stat-label">MBTI</span><span class="stat-value">INTP (5w4)</span></div>
+        <div class="char-stat"><span class="stat-label">혈액형</span><span class="stat-value">AB형</span></div>
+      </div>
+      <div class="char-quote">
+        <p>"흥미롭군요."</p>
+      </div>
+      <span class="char-tag">관찰자·분석적</span>
+    </div>
+
+    <!-- 아이릴 -->
+    <div class="char-card" data-theme="brown" data-delay="3">
+      <div class="char-image-wrap">
+        <img src="https://raw.githubusercontent.com/StL63/A/main/MD/I1.png" alt="아이릴">
+      </div>
+      <span class="char-icon">🌹</span>
+      <p class="char-role">Iryl Belmont</p>
+      <h3 class="char-name">아이릴 벨몬트</h3>
+      <p class="char-subtitle">벨몬트 백작 영애</p>
+      <div class="char-divider"></div>
+      <p class="char-desc">최근 수도 사교계에서 가장 주목받고 있는 신흥 귀족 영애. <br>누구에게나 친절하고 사교적이다.</p>
+      <div class="char-stats">
+        <div class="char-stat"><span class="stat-label">나이</span><span class="stat-value">23세</span></div>
+        <div class="char-stat"><span class="stat-label">키</span><span class="stat-value">165cm</span></div>
+        <div class="char-stat"><span class="stat-label">MBTI</span><span class="stat-value">ENFP (3w2)</span></div>
+        <div class="char-stat"><span class="stat-label">혈액형</span><span class="stat-value">O형</span></div>
+      </div>
+      <div class="char-quote">
+        <p>"제가 혹시 실례를 한 건 아니겠죠...?"</p>
+      </div>
+      <span class="char-tag">인기인·매력적</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- RELATIONSHIP NETWORK -->
+<div class="relations-wrap" id="relations">
+  <div class="relations-inner">
+    <p class="section-label">Relationships</p>
+    <h2 class="section-title">관계도</h2>
+    <div class="section-divider"><div class="deco-line"><div class="deco-diamond"></div></div></div>
+<p class="rel-hint">◇ 다이아몬드 노드에 마우스를 올리거나 터치하면 관계 설명이 표시됩니다</p>
+    <div class="network-container" id="network-container">
+      <svg id="relation-svg" class="network-svg" viewBox="0 0 600 430" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- 연결선 6개 -->
+        <!-- 알릭스(300,65) 자비에(80,215) 아이릴(520,215) 이녹(300,370) -->
+        <line class="rel-line" x1="300" y1="65" x2="80" y2="215"/>
+        <line class="rel-line" x1="300" y1="65" x2="300" y2="370"/>
+        <line class="rel-line" x1="300" y1="65" x2="520" y2="215"/>
+        <line class="rel-line" x1="80" y1="215" x2="300" y2="370"/>
+        <line class="rel-line" x1="80" y1="215" x2="520" y2="215"/>
+        <line class="rel-line" x1="300" y1="370" x2="520" y2="215"/>
+
+        <!-- 관계 다이아몬드 노드 (클릭/호버) -->
+        <!-- 알릭스-자비에 midpoint (190, 140) -->
+        <g class="rel-diamond-group" data-rel="0" transform="translate(190,140)">
+          <rect class="rel-diamond-shape" x="-9" y="-9" width="18" height="18" transform="rotate(45)"/>
+        </g>
+        <!-- 알릭스-이녹 midpoint (300, 217) → 왼쪽 오프셋 (275, 220) -->
+        <g class="rel-diamond-group" data-rel="1" transform="translate(300,170)">
+          <rect class="rel-diamond-shape" x="-9" y="-9" width="18" height="18" transform="rotate(45)"/>
+        </g>
+        <!-- 알릭스-아이릴 midpoint (410, 140) -->
+        <g class="rel-diamond-group" data-rel="2" transform="translate(410,140)">
+          <rect class="rel-diamond-shape" x="-9" y="-9" width="18" height="18" transform="rotate(45)"/>
+        </g>
+        <!-- 자비에-이녹 midpoint (190, 292) -->
+        <g class="rel-diamond-group" data-rel="3" transform="translate(190,292)">
+          <rect class="rel-diamond-shape" x="-9" y="-9" width="18" height="18" transform="rotate(45)"/>
+        </g>
+        <!-- 자비에-아이릴 midpoint (300, 215) → 오른쪽 오프셋 (325, 220) -->
+        <g class="rel-diamond-group" data-rel="4" transform="translate(375,215)">
+          <rect class="rel-diamond-shape" x="-9" y="-9" width="18" height="18" transform="rotate(45)"/>
+        </g>
+        <!-- 이녹-아이릴 midpoint (410, 292) -->
+        <g class="rel-diamond-group" data-rel="5" transform="translate(410,292)">
+          <rect class="rel-diamond-shape" x="-9" y="-9" width="18" height="18" transform="rotate(45)"/>
+        </g>
+
+        <!-- 캐릭터 노드: 알릭스 (상단 중앙) -->
+        <g class="char-node-group" transform="translate(300,65)">
+          <circle class="char-node-circle" r="46"/>
+          <text text-anchor="middle" y="2" font-size="26">👑</text>
+          <text class="char-node-label" text-anchor="middle" y="20" font-size="12">알릭스</text>
+        </g>
+
+        <!-- 자비에 (좌측) -->
+        <g class="char-node-group" transform="translate(80,215)">
+          <circle class="char-node-circle" r="46"/>
+          <text text-anchor="middle" y="2" font-size="26">🗡️</text>
+          <text class="char-node-label" text-anchor="middle" y="20" font-size="12">자비에</text>
+        </g>
+
+        <!-- 아이릴 (우측) -->
+        <g class="char-node-group" transform="translate(520,215)">
+          <circle class="char-node-circle" r="46"/>
+          <text text-anchor="middle" y="2" font-size="26">🌹</text>
+          <text class="char-node-label" text-anchor="middle" y="20" font-size="12">아이릴</text>
+        </g>
+
+        <!-- 이녹 (하단 중앙) -->
+        <g class="char-node-group" transform="translate(300,370)">
+          <circle class="char-node-circle" r="46"/>
+          <text text-anchor="middle" y="2" font-size="26">🔮</text>
+          <text class="char-node-label" text-anchor="middle" y="20" font-size="12">이녹</text>
+        </g>
+      </svg>
+
+      <!-- 툴팁 -->
+      <div class="rel-tooltip" id="rel-tooltip">
+        <div class="rel-tooltip-names" id="tooltip-names"></div>
+        <div class="rel-tooltip-desc" id="tooltip-desc"></div>
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+<!-- WORLD MAP SECTION -->
+<div class="world-outer" id="world">
+  <div class="world-inner-wrap">
+    <p class="section-label">World</p>
+    <h2 class="section-title">세계관</h2>
+    <div class="section-divider"><div class="deco-line"><div class="deco-diamond"></div></div></div>
+    <p class="rel-hint">◇ 지도 위 지역 아이콘을 터치하면 설명이 표시됩니다</p>
+
+    <div class="map-container" id="empire-map-container">
+  <img src="https://raw.githubusercontent.com/StL63/A/main/MD/M2.png" class="map-img" alt="그리노슈 제국 내부 지도" id="empire-map-img">
+
+  <div class="map-hotspot" style="top: 17%; left: 51%; width: 10%; height: 16%;" data-loc="ivlon"></div>
+  
+  <div class="map-hotspot" style="top: 41%; left: 52%; width: 10%; height: 14%;" data-loc="palace"></div>
+  
+  <div class="map-hotspot" style="top: 64%; left: 52%; width: 10%; height: 15%;" data-loc="city"></div>
+  
+  <div class="map-hotspot" style="top: 48%; left: 28%; width: 12%; height: 18%;" data-loc="tower"></div>
+  
+  <div class="map-hotspot" style="top: 57%; left: 73%; width: 12%; height: 18%;" data-loc="belmont"></div>
+</div>
+
+    <!-- 정보 패널 -->
+    <div class="map-info-panel" id="empire-info-panel">
+      <span class="map-info-icon" id="empire-info-icon"></span>
+      <div class="map-info-title" id="empire-info-title"></div>
+      <div class="map-info-text" id="empire-info-text"></div>
+    </div>
+
+    <!-- 사교계 카드 (지도와 별도) -->
+    <div class="society-card">
+      <div class="society-title">🎭 사교계</div>
+      <div class="society-text">수도 세베이를 중심으로 형성된 귀족 사회. 연회, 티파티, 오페라 관람 등이 주요 사교 활동이며 소문과 평판이 큰 영향력을 가진다. <br>공개적인 망신은 오랫동안 회자될 수 있다.</div>
+    </div>
+    <!-- 마법 사회 카드 (지도와 별도) -->
+    <div class="magical-card">
+      <div class="magical-title">✨ 마법사 사회</div>
+      <div class="magical-text">일반 귀족들과 분위기가 꽤 다르다. 혈통보다 재능을 중시하며 폐쇄적이고 개인주의가 강하다. 대부분 사회성이 부족한 경우가 많다. 귀족 사회에서는 유능하지만 꺼림칙한 존재, 필요하지만 가까워지고 싶진 않은 존재로 여겨진다.</div>
+  </div>
+</div>
+
+
+
+
+<!-- NEIGHBOR MAP -->
+<div class="neighbor-outer" id="neighbors">
+  <div class="neighbor-inner-wrap">
+    <p class="section-label">Neighbors</p>
+    <h2 class="section-title">주변국</h2>
+    <div class="section-divider"><div class="deco-line"><div class="deco-diamond"></div></div></div>
+    <p class="rel-hint">◇ 지도 위 지역 아이콘을 터치하면 설명이 표시됩니다</p>
+    <div class="map-container" id="continent-map-container">
+  <img src="https://raw.githubusercontent.com/StL63/A/main/MD/M1.png" class="map-img" alt="대륙 지도">
+
+  <div class="map-hotspot" style="top: 15%; left: 51%; width: 14%; height: 16%;" data-loc="barten"></div>
+  
+  <div class="map-hotspot" style="top: 45%; left: 78%; width: 14%; height: 16%;" data-loc="sernoan"></div>
+  
+  <div class="map-hotspot" style="top: 72%; left: 54%; width: 14%; height: 16%;" data-loc="kalion"></div>
+</div>
+
+    <div class="map-info-panel" id="continent-info-panel">
+      <span class="map-info-icon" id="continent-info-icon"></span>
+      <div class="map-info-title" id="continent-info-title"></div>
+      <div class="map-info-text" id="continent-info-text"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="deco-line" style="width:120px;margin:0 auto 1.5rem;"><div class="deco-diamond"></div></div>
+  <p class="footer-text">Grinouche Empire &nbsp;·&nbsp; 그리노슈 제국</p>
+</footer>
+
+<script>
+// NAV
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
+
+// SCROLL REVEAL
+const revealAll = (selector, delayMult = 120) => {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        setTimeout(() => el.classList.add('visible'), parseInt(el.dataset.delay || 0) * delayMult);
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll(selector).forEach(el => obs.observe(el));
+};
+revealAll('.char-card', 120);
+
+
+// RELATIONSHIP NETWORK
+const relData = [
+  { pair: '👑 ↔ 🗡️', names: '알릭스 · 자비에', desc: '어린 시절부터 함께 교육받음.\n 능력은 인정하지만 가치관 차이로 자주 충돌하는 사이.' },
+  { pair: '👑 ↔ 🔮', names: '알릭스 · 이녹', desc: '황실과 마탑의 공식 창구.\n 예의는 있으나 친밀하지 않은 공적인 관계.' },
+  { pair: '👑 ↔ 🌹', names: '알릭스 · 아이릴', desc: '최근 몇 달 사이 가까워짐.\n 사교계의 관심을 받고 있는 관계.' },
+  { pair: '🗡️ ↔ 🔮', names: '자비에 · 이녹', desc: '성향이 정반대.\n 만나면 은근한 신경전을 벌이는 사이.' },
+  { pair: '🗡️ ↔ 🌹', names: '자비에 · 아이릴', desc: '서로 조심스럽게 대하는 미묘한 관계.' },
+  { pair: '🔮 ↔ 🌹', names: '이녹 · 아이릴', desc: '황궁에서 종종 마주치는 사이.\n 이녹은 그녀를 관찰 중.' }
+];
+
+const tooltip = document.getElementById('rel-tooltip');
+let activeRel = null;
+
+function showTooltip(group, idx) {
+  const d = relData[idx];
+  document.getElementById('tooltip-names').textContent = d.names;
+  document.getElementById('tooltip-desc').textContent = d.desc;
+
+  // SVG 내 transform에서 위치 파싱
+  const transform = group.getAttribute('transform');
+  const match = transform.match(/translate\(([^,]+),([^)]+)\)/);
+  if (!match) return;
+  const svgX = parseFloat(match[1]);
+  const svgY = parseFloat(match[2]);
+
+  const svg = document.getElementById('relation-svg');
+  const container = document.getElementById('network-container');
+  const svgRect = svg.getBoundingClientRect();
+  const contRect = container.getBoundingClientRect();
+  const vbWidth = 600, vbHeight = 430;
+  const scaleX = svgRect.width / vbWidth;
+  const scaleY = svgRect.height / vbHeight;
+
+  let left = (svgX * scaleX) + (svgRect.left - contRect.left);
+  let top = (svgY * scaleY) + (svgRect.top - contRect.top);
+
+  tooltip.style.left = '';
+  tooltip.style.right = '';
+  tooltip.style.transform = '';
+
+  // 좌우 오버플로우 방지
+  const tipW = 240;
+  if (left + tipW > contRect.width) {
+    tooltip.style.left = Math.max(0, left - tipW) + 'px';
+  } else {
+    tooltip.style.left = left + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+  }
+
+  // 위아래 배치
+  if (svgY > vbHeight * 0.6) {
+    tooltip.style.top = (top - 140) + 'px';
+  } else {
+    tooltip.style.top = (top + 18) + 'px';
+  }
+
+  tooltip.classList.add('show');
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('show');
+  if (activeRel) { activeRel.classList.remove('active'); activeRel = null; }
+}
+
+document.querySelectorAll('.rel-diamond-group').forEach(group => {
+  const idx = parseInt(group.dataset.rel);
+
+// 마우스 올리면 즉시 고정 및 표시
+  group.addEventListener('mouseenter', () => {
+    if (activeRel) { activeRel.classList.remove('active'); }
+    activeRel = group;
+    group.classList.add('active');
+    showTooltip(group, idx);
+  });
+  
+  // 클릭해도 꺼지지 않고 무조건 유지!
+  group.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (activeRel) { activeRel.classList.remove('active'); }
+    activeRel = group;
+    group.classList.add('active');
+    showTooltip(group, idx);
+  });
+});
+
+document.addEventListener('click', hideTooltip);
+
+// EMPIRE MAP DATA
+const empireData = {
+  palace: { icon: '👑', title: '황실 — 에스카르트 황가', text: '에스카르트 황가가 수백 년 동안 제국을 통치하고 있다. 황실의 혼인은 단순한 결혼이 아니라 정치와 권력의 문제로 여겨지며, 질서와 품위를 무엇보다 중요하게 여긴다.' },
+  city: { icon: '🏰', title: '세베이 — 제국의 수도', text: '그리노슈 제국의 수도. 제국 문화와 귀족 사교계의 중심지로, 연회와 오페라 관람이 일상이다. 소문과 평판이 개인과 가문의 가치를 결정하며, 대표적으로 중앙 광장, 오페라 극장, 귀족 전용 티살롱 로즈베일이 있다.' },
+  tower: { icon: '🔮', title: '바르토나스 마탑', text: '대륙 최대 규모의 마법사 조직. 제국 내에 존재하지만 황실 소속이 아니며, 독자적인 권한과 영향력을 보유한다. 마법사는 귀족 사회와는 별개의 문화를 지닌 존재로 여겨진다. 특히 정보 수집, 결계, 기억 보존, 마도구 제작 분야에서 독점적인 영향력을 가졌다.' },
+  ivlon: { icon: '⚔️', title: '이블론 공작령', text: '제국 군부를 장악한 무력 귀족 이블론 가문의 영지. 강경하고 실리적인 성향으로 유명하다. 현 후계자는 자비에 이블론.' },
+  belmont: { icon: '🌹', title: '벨몬트 백작령', text: '최근 급부상한 신흥 귀족으로, 몇 년 사이 황실 사업과 무역으로 빠르게 부를 쌓았다. 황후의 후원을 받으며 사교계 중심으로 떠오르나 오랜 명문 귀족들은 벨몬트 가문을 은근히 경계한다.' }
+};
+
+// CONTINENT MAP DATA
+const continentData = {
+  barten: { icon: '⚔️', title: '바르텐 왕국 — 북쪽', text: '군사력이 강한 북방 국가. 혹독한 추위와 강한 기사 문화로 유명하다. 검술과 육체 단련을 중시하며, 그리노슈 제국과 현재 휴전 중이지만 긴장 관계를 유지하고 있다.' },
+  sernoan: { icon: '⛪', title: '세르노안 성국 — 동쪽', text: '신전 중심 종교 국가. 종교 세력이 강하며 황실과 미묘한 견제 관계에 있다. 독자적인 신앙 체계를 유지하고 있다.' },
+  kalion: { icon: '💰', title: '칼리온 연합국 — 남쪽', text: '거대한 무역 도시들의 연합체. 무역이 중심이며 귀족보다 상업과 자본의 영향력이 더 세다. 그리노슈의 귀족들은 칼리온을 속물이라 무시하나 실제 경제 의존도는 높다. 황실과의 경제적 관계가 중요하다.' }
+};
+
+function setupMapHotspots(containerSelector, data, panelId, iconId, titleId, textId) {
+  const panel = document.getElementById(panelId);
+  const iconEl = document.getElementById(iconId);
+  const titleEl = document.getElementById(titleId);
+  const textEl = document.getElementById(textId);
+  let activeHotspot = null;
+
+  document.querySelectorAll(`${containerSelector} .map-hotspot`).forEach(hs => {
+    const loc = hs.dataset.loc;
+
+    const activate = () => {
+      if (!data[loc]) return;
+      if (activeHotspot && activeHotspot !== hs) activeHotspot.classList.remove('active');
+      activeHotspot = hs;
+      hs.classList.add('active');
+      iconEl.textContent = data[loc].icon;
+      titleEl.textContent = data[loc].title;
+      textEl.textContent = data[loc].text;
+      panel.classList.add('open');
+    };
+
+    const deactivate = () => {
+      hs.classList.remove('active');
+      panel.classList.remove('open');
+      activeHotspot = null;
+    };
+
+    hs.addEventListener('mouseenter', activate);
+    hs.addEventListener('click', (e) => {
+      e.stopPropagation();
+      activate(); // 💡 이미 켜져 있든 아니든, 클릭하면 무조건 '켜짐' 유지!
+    });
+  });
+
+  document.addEventListener('click', () => {
+    if (activeHotspot) { activeHotspot.classList.remove('active'); panel.classList.remove('open'); activeHotspot = null; }
+  });
+}
+
+setupMapHotspots('#empire-map-container', empireData, 'empire-info-panel', 'empire-info-icon', 'empire-info-title', 'empire-info-text');
+setupMapHotspots('#continent-map-container', continentData, 'continent-info-panel', 'continent-info-icon', 'continent-info-title', 'continent-info-text');
+</script>
+</body>
+</html>
