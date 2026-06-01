@@ -214,6 +214,30 @@
     .characters-grid { grid-template-columns: 1fr; }
     .factions-grid { grid-template-columns: 1fr; }
   }
+ /* ===================================================
+     📱 [모바일 전용] - 지도가 너무 작아지는 문제 해결 코드
+     =================================================== */
+  @media (max-width: 800px) {
+    /* 1. 지도가 들어있는 상자에 옆으로 밀어서 볼 수 있는 스크롤 기능 추가 */
+    .map-container {
+      width: 100% !important;
+      overflow-x: auto !important;   /* 가로로 삐져나온 지도를 밀어서 보게 설정 */
+      -webkit-overflow-scrolling: touch;
+      display: block !important;
+    }
+
+    /* 2. 지도 이미지가 너무 작아지지 않도록 모바일에서 가로폭을 강제로 고정 */
+    .map-img {
+      width: 800px !important;       /* 모바일에서도 지도가 800px 크기로 유지되어 선명해집니다! */
+      max-width: none !important;
+      height: auto !important;
+    }
+
+    /* 3. 지도가 커진 만큼, 터치 영역(핫스팟)들의 클릭 위치가 깨지지 않게 부모 기준 정렬 */
+    #empire-map-container, #continent-map-container {
+      position: relative;
+    }
+  }
 </style>
 </head>
 <body>
