@@ -215,28 +215,34 @@
     .factions-grid { grid-template-columns: 1fr; }
   }
  /* ===================================================
-     📱 [모바일 전용] - 가로 스크롤 없이 화면에 쏙 들어오게 맞춤
+     📱 [모바일 전용] - 가로 스크롤 & 싹둑 잘림 완벽 해결
      =================================================== */
   @media (max-width: 800px) {
-    /* 1. 옆으로 밀리는 스크롤을 완전히 없애고 화면에 맞춥니다 */
+    /* 1. 지도를 감싸는 상자가 폰 화면을 절대 넘어가지 않게 가둠 */
     .map-container {
       width: 100% !important;
-      overflow-x: hidden !important; /* 스크롤바 삭제 */
-      display: inline-block !important;
-      padding: 0 5px; /* 양옆에 살짝 숨통만 트여줍니다 */
-    }
-
-    /* 2. 지도가 모바일 화면 가로폭(100%)에 칼같이 맞춰지도록 설정 */
-    .map-container .map-img {
-      width: 100% !important;       
-      min-width: 100% !important;   
       max-width: 100% !important;
+      display: block !important;
+      margin: 0 auto !important;
+    }
+    
+    /* 2. 💡 범인 검거! 이미지가 폰 화면 너비(100%)에 칼같이 맞춰지도록 강제 설정 */
+    .map-container .map-img {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0px !important; /* 💡 기존에 남아있던 800px 고정 명령을 무력화! */
       height: auto !important;
     }
 
-    /* 3. 혹시 모바일에서 세방향으로 퍼져있던 여백(Padding) 때문에 좁아 보였다면 여백 축소 */
+    /* 3. 모바일에서는 양옆 빈 공간(여백)을 확 줄여서, 지도를 최대한 넓게 씁니다 */
     .world-outer, .neighbor-outer {
-      padding: 4rem 1rem !important; /* 위아래 여백은 줄이고, 양옆을 넓혀서 지도를 더 크게 확보! */
+      padding: 4rem 15px !important; 
+    }
+    
+    /* 4. "설명이 표시됩니다" 같은 글자가 잘리지 않도록 줄바꿈 허용 */
+    .rel-hint {
+      word-break: keep-all;
+      padding: 0 10px;
     }
   }
 </style>
