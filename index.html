@@ -215,28 +215,28 @@
     .factions-grid { grid-template-columns: 1fr; }
   }
  /* ===================================================
-     📱 [모바일 전용] - 모든 지도 크기 확대 및 가로 스크롤 패치
+     📱 [모바일 전용] - 가로 스크롤 없이 화면에 쏙 들어오게 맞춤
      =================================================== */
   @media (max-width: 800px) {
-    /* 1. 지도가 들어있는 상자에 옆으로 밀어서 볼 수 있는 스크롤 기능 추가 */
+    /* 1. 옆으로 밀리는 스크롤을 완전히 없애고 화면에 맞춥니다 */
     .map-container {
       width: 100% !important;
-      overflow-x: auto !important;   /* 가로로 삐져나온 지도를 밀어서 보게 설정 */
-      -webkit-overflow-scrolling: touch;
-      display: block !important;
+      overflow-x: hidden !important; /* 스크롤바 삭제 */
+      display: inline-block !important;
+      padding: 0 5px; /* 양옆에 살짝 숨통만 트여줍니다 */
     }
 
-    /* 2. 💡 모든 지도 이미지(.map-img)가 찌그러지지 않고 800px 크기로 유지되도록 강제 고정! */
+    /* 2. 지도가 모바일 화면 가로폭(100%)에 칼같이 맞춰지도록 설정 */
     .map-container .map-img {
-      width: 800px !important;       
-      min-width: 800px !important;   /* 주변국 지도까지 강제로 넓혀주는 치트키 */
-      max-width: none !important;
+      width: 100% !important;       
+      min-width: 100% !important;   
+      max-width: 100% !important;
       height: auto !important;
     }
 
-    /* 3. 지도가 커진 만큼, 터치 영역(핫스팟)들의 클릭 위치가 깨지지 않게 부모 기준 정렬 */
-    #empire-map-container, #continent-map-container {
-      position: relative;
+    /* 3. 혹시 모바일에서 세방향으로 퍼져있던 여백(Padding) 때문에 좁아 보였다면 여백 축소 */
+    .world-outer, .neighbor-outer {
+      padding: 4rem 1rem !important; /* 위아래 여백은 줄이고, 양옆을 넓혀서 지도를 더 크게 확보! */
     }
   }
 </style>
