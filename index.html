@@ -215,7 +215,7 @@
     .factions-grid { grid-template-columns: 1fr; }
   }
  /* ===================================================
-     📱 [모바일 전용] - 지도가 너무 작아지는 문제 해결 코드
+     📱 [모바일 전용] - 모든 지도 크기 확대 및 가로 스크롤 패치
      =================================================== */
   @media (max-width: 800px) {
     /* 1. 지도가 들어있는 상자에 옆으로 밀어서 볼 수 있는 스크롤 기능 추가 */
@@ -226,9 +226,10 @@
       display: block !important;
     }
 
-    /* 2. 지도 이미지가 너무 작아지지 않도록 모바일에서 가로폭을 강제로 고정 */
-    .map-img {
-      width: 800px !important;       /* 모바일에서도 지도가 800px 크기로 유지되어 선명해집니다! */
+    /* 2. 💡 모든 지도 이미지(.map-img)가 찌그러지지 않고 800px 크기로 유지되도록 강제 고정! */
+    .map-container .map-img {
+      width: 800px !important;       
+      min-width: 800px !important;   /* 주변국 지도까지 강제로 넓혀주는 치트키 */
       max-width: none !important;
       height: auto !important;
     }
